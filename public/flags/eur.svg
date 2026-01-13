@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" role="img" aria-label="EUR flag">
+  <rect width="28" height="20" fill="#0052b4"/>
+  <circle cx="14" cy="10" r="7" fill="none" stroke="#ffda44" stroke-width="2"/>
+  <text x="14" y="13" font-size="7" text-anchor="middle" fill="#ffda44" font-family="Arial" font-weight="bold">€</text>
+</svg>

@@ -1,0 +1,116 @@
+{
+  "updatedAt": "2026-01-12T16:00:00+07:00",
+  "source": "Cập nhật thủ công theo thị trường Việt Nam",
+  "gold": {
+    "unit": "VND/lượng (1 lượng = 10 chỉ = 37.5g)",
+    "items": [
+      {
+        "brand": "SJC",
+        "type": "Vàng SJC 1L, 5c, 10c",
+        "buy": 160000000,
+        "sell": 162000000,
+        "logo": "/logos/gold/SJC.png"
+      },
+      {
+        "brand": "PNJ",
+        "type": "Vàng 9999 (24K)",
+        "buy": 155000000,
+        "sell": 158000000,
+        "logo": "/logos/gold/PNJ.webp"
+      },
+      {
+        "brand": "Bảo Tín Minh Châu",
+        "type": "Vàng 9999",
+        "buy": 160000000,
+        "sell": 162000000,
+        "logo": "/logos/gold/BTMC.png"
+      },
+      {
+        "brand": "Doji",
+        "type": "Vàng SJC",
+        "buy": 160000000,
+        "sell": 162000000,
+        "logo": "/logos/gold/DOJI.jpg"
+      },
+      {
+        "brand": "Phú Quý",
+        "type": "Vàng 999.9",
+        "buy": 157000000,
+        "sell": 160000000,
+        "logo": "/logos/gold/PhuQuy.png"
+      }
+    ],
+    "note": "Giá tham khảo từ thị trường Hà Nội/TP.HCM. Cập nhật thủ công. Giá thực tế khác nhau theo từng thương hiệu và thời điểm."
+  },
+  "fuel": {
+    "unit": "VND/lít (Mazut: VND/kg)",
+    "regions": ["Vùng 1", "Vùng 2"],
+    "items": [
+      {
+        "code": "E5 RON92",
+        "name": "Xăng E5 RON 92",
+        "region1": 18233,
+        "region2": 18233
+      },
+      {
+        "code": "RON95-III",
+        "name": "Xăng RON 95-III",
+        "region1": 18560,
+        "region2": 18560
+      },
+      {
+        "code": "DO 0.05S",
+        "name": "Dầu diesel 0.05S-II",
+        "region1": 17061,
+        "region2": 17061
+      },
+      {
+        "code": "Kerosene",
+        "name": "Dầu hỏa",
+        "region1": 17559,
+        "region2": 17559
+      },
+      {
+        "code": "Mazut",
+        "name": "Dầu mazut 180CST 3.5S",
+        "region1": 13403,
+        "region2": 13403
+      }
+    ],
+    "note": "Giá bán lẻ tối đa theo kỳ điều hành. Cập nhật thủ công, không realtime. Lưu ý: mazut tính theo VND/kg."
+  },
+  "units": {
+    "gold": {
+      "troy_oz_to_gram": 31.1034768,
+      "gram_to_chi": 0.2667,
+      "chi_to_cay": 0.1,
+      "conversions": {
+        "usd": { "label": "USD (1 Dollar)", "unit": "USD", "isPrice": true, "priceUsd": 1, "icon": "💵" },
+        "vnd": { "label": "VND", "unit": "VND", "isPrice": true, "priceVnd": 1, "icon": "💴" },
+        "troy_oz": { "label": "Troy Ounce", "unit": "oz", "fromOz": 1, "icon": "🪙" },
+        "gram": { "label": "Gram", "unit": "g", "fromOz": 31.1034768, "icon": "⚖️" },
+        "chi": { "label": "Chỉ (3.75g)", "unit": "chỉ", "fromOz": 8.2942618133, "icon": "💍" },
+        "luong": { "label": "Lượng (37.5g)", "unit": "lượng", "fromOz": 0.8294261813, "icon": "⭐" },
+        "cay": { "label": "Cây (37.5g)", "unit": "cây", "fromOz": 0.8294261813, "icon": "🏅" },
+        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 162000000, "icon": "🥇" },
+        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 158000000, "icon": "💎" },
+        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 162000000, "icon": "⭐" },
+        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 162000000, "icon": "🌟" },
+        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 160000000, "icon": "✨" }
+      }
+    },
+    "oil": {
+      "barrel_to_liter": 158.987,
+      "conversions": {
+        "usd": { "label": "USD (1 Dollar)", "unit": "USD", "isPrice": true, "priceUsd": 1, "icon": "💵" },
+        "vnd": { "label": "VND", "unit": "VND", "isPrice": true, "priceVnd": 1, "icon": "💴" },
+        "barrel": { "label": "Barrel", "unit": "bbl", "fromBarrel": 1 },
+        "liter": { "label": "Liter", "unit": "L", "fromBarrel": 158.987 },
+        "gallon_us": { "label": "US Gallon", "unit": "gal", "fromBarrel": 42 },
+        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18233 },
+        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18560 },
+        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 17061 }
+      }
+    }
+  }
+}

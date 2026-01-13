@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 28 20" role="img" aria-label="USD flag">
+  <rect width="28" height="20" fill="#fff"/>
+  <rect y="0" width="28" height="6" fill="#b22234"/>
+  <rect y="8" width="28" height="6" fill="#b22234"/>
+  <rect y="14" width="28" height="6" fill="#b22234"/>
+  <rect width="12" height="10" fill="#3c3b6e"/>
+  <text x="6" y="7" font-size="6" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="bold">US</text>
+</svg>
