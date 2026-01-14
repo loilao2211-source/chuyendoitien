@@ -10,7 +10,7 @@ A real-time multi-currency, cryptocurrency, gold, and oil price converter built 
 ✅ **Oil Price Converter** - Brent & WTI crude oil prices
 ✅ **2-Hour Caching** - Fast responses with Upstash Redis (or in-memory for dev)
 ✅ **SEO Optimized** - Proper metadata and content for search engines
-✅ **Mobile Friendly** - Responsive Tailwind CSS design
+✅ **Mobile Friendly** - Responsive Tailwind CSS design.
 ✅ **Vercel Ready** - Deploy in one click
 
 ## Data Sources
