@@ -1,14 +1,64 @@
+import Script from 'next/script';
 import Link from 'next/link';
 import MarketOverview from '@/components/MarketOverview';
 
 export const metadata = {
-  title: 'PriceConverter - Dashboard',
-  description: 'Convert currency, crypto, gold, and oil prices with real-time rates',
-  openGraph: {
-    title: 'PriceConverter - Dashboard',
-    description: 'Access tools to convert currency, cryptocurrency, gold, and oil prices',
+  title: 'Chuyển Đổi Tiền - Quy đổi USD sang VND, giá vàng, Bitcoin chính xác',
+  description: 'Công cụ chuyển đổi tiền tệ (USD, VND), Bitcoin, vàng XAU, dầu thô miễn phí. Tỷ giá trực tuyến cập nhật 2 giờ/lần. Nhanh, chính xác, dễ sử dụng.',
+  keywords: 'chuyển đổi tiền, quy đổi tiền tệ, USD sang VND, VND sang USD, giá vàng hôm nay, giá Bitcoin, chuyendoitien',
+  alternates: {
+    canonical: 'https://chuyendoitien.com',
   },
-  canonical: 'https://priceconverter.vercel.app/',
+  openGraph: {
+    title: 'Chuyển Đổi Tiền - Quy đổi USD, VND, vàng, Bitcoin',
+    description: 'Công cụ miễn phí chuyển đổi tiền tệ, vàng, dầu và cryptocurrency với tỷ giá thời gian thực',
+    url: 'https://chuyendoitien.com',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Chuyển Đổi Tiền - Quy đổi tiền tệ miễn phí',
+    description: 'Chuyển đổi USD, VND, Bitcoin, vàng với tỷ giá trực tuyến',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Làm thế nào để chuyển đổi USD sang VND?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Truy cập công cụ chuyển đổi tiền tệ, nhập số tiền USD cần đổi, chọn VND làm đơn vị đích và nhấn chuyển đổi. Tỷ giá được cập nhật mỗi 2 giờ từ nguồn dữ liệu chính thức.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Tỷ giá có chính xác không?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Chúng tôi sử dụng dữ liệu từ Open ER-API, CoinGecko, Metals API và EIA. Tỷ giá được cache 2 giờ để đảm bảo hiệu suất nhưng vẫn đủ mới cho mục đích tham khảo.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Công cụ có miễn phí không?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Hoàn toàn miễn phí. Bạn có thể chuyển đổi tiền tệ, vàng, dầu và cryptocurrency không giới hạn số lần sử dụng.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Hỗ trợ những loại tiền tệ nào?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Chúng tôi hỗ trợ hơn 20 loại tiền tệ bao gồm USD, VND, EUR, JPY, GBP cùng 12+ loại cryptocurrency phổ biến như Bitcoin, Ethereum, Tether.',
+      },
+    },
+  ],
 };
 
 export default function Dashboard() {
@@ -40,7 +90,13 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="py-12 space-y-10">
+    <>
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="py-12 space-y-10">
       {/* Hero Headline */}
       <div className="max-w-5xl mx-auto px-4 mb-8">
         <div className="relative rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 text-white shadow-lg py-10 px-6 overflow-hidden">
@@ -106,5 +162,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -2,8 +2,23 @@ import FinanceTabs from '@/components/FinanceTabs';
 import Disclaimer from '@/components/Disclaimer';
 
 export const metadata = {
-  title: 'Finance Hub | Aggregated FX, Crypto, Gold, Oil',
-  description: 'Finance hub with tabs for FX, crypto, gold, and oil using existing APIs.',
+  title: 'Bảng Điều Khiển Tài Chính - Tổng hợp tiền tệ, crypto, vàng, dầu',
+  description: 'Bảng điều khiển tài chính tổng hợp với tabs FX, crypto, vàng và dầu. Xem tất cả tỷ giá và giá cả trong một giao diện thống nhất.',
+  keywords: 'bảng điều khiển tài chính, finance dashboard, tổng hợp giá, fx crypto gold oil',
+  alternates: {
+    canonical: 'https://chuyendoitien.com/finance',
+  },
+  openGraph: {
+    title: 'Bảng Điều Khiển Tài Chính - ChuyenDoiTien',
+    description: 'Tổng hợp tiền tệ, crypto, vàng, dầu trong một giao diện',
+    url: 'https://chuyendoitien.com/finance',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bảng Điều Khiển Tài Chính',
+    description: 'Tổng hợp FX, crypto, vàng, dầu',
+  },
 };
 
 export default function FinancePage() {

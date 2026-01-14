@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-lg font-semibold text-gray-900">
           <span className="text-2xl">💱</span>
-          <span>PriceConverter</span>
+          <span>ChuyenDoiTien</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-3">
