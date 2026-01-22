@@ -12,22 +12,37 @@ export async function GET(request) {
 
     const cacheKey = `gold:${quote.toLowerCase()}`;
 
-    // Try cache first
+    // Try cache first (but check freshness)
     const cached = await cache.get(cacheKey);
-    if (cached) {
-      return Response.json(
-        normalize.success(cached, { source: 'Metals API', cached: true, ttl: TTL })
-      );
+    if (cached && cached.updatedAt) {
+      const ageMs = Date.now() - new Date(cached.updatedAt).getTime();
+      if (ageMs < 5 * 60 * 1000) { // Fresh if < 5 minutes
+        return Response.json(
+          normalize.success(cached, { 
+            source: cached.source || 'Metals API', 
+            cached: true, 
+            ttl: TTL,
+            updatedAt: cached.updatedAt,
+            ageMinutes: Math.round(ageMs / 60000),
+          })
+        );
+      }
     }
 
-    // Cache miss - fetch from provider
+    // Cache miss or stale - fetch from provider
     const result = await metals.getGoldPrice(quote);
 
     // Store in cache
     await cache.set(cacheKey, result, TTL);
 
     return Response.json(
-      normalize.success(result, { source: 'Metals API', cached: false, ttl: TTL })
+      normalize.success(result, { 
+        source: result.source || 'Metals API', 
+        cached: false, 
+        ttl: TTL,
+        updatedAt: result.updatedAt,
+        ageMinutes: 0,
+      })
     );
   } catch (error) {
     console.error('[API/Gold] Error:', error);

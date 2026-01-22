@@ -107,7 +107,7 @@ export default function Dashboard() {
               Công cụ chuyển đổi giá trị đa năng
             </h1>
             <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Từ VND sang USD, vàng, dầu, crypto — chỉ 1 bước. Cập nhật 2 giờ/lần, đủ dùng cho tra cứu nhanh.
+              Từ VND sang USD, vàng, dầu, crypto — chỉ 1 bước.
             </p>
           </div>
         </div>

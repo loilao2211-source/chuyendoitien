@@ -1,0 +1,18 @@
+{
+  "default": {
+    "spotFeePercent": 0.1,
+    "spreadPercent": 0.5
+  },
+  "binance": {
+    "spotFeePercent": 0.1,
+    "spreadPercent": 0.5
+  },
+  "okx": {
+    "spotFeePercent": 0.08,
+    "spreadPercent": 0.5
+  },
+  "bybit": {
+    "spotFeePercent": 0.1,
+    "spreadPercent": 0.5
+  }
+}

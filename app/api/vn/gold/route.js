@@ -1,17 +1,27 @@
-import vnPrices from '@/data/vn-prices.json';
 import { normalize } from '@/lib/normalize';
+import { fetchCompleteVnGold } from '@/services/vnGoldService';
 
 export async function GET() {
   try {
-    const goldData = {
-      updatedAt: vnPrices.updatedAt,
-      unit: vnPrices.gold.unit,
-      items: vnPrices.gold.items,
-      note: vnPrices.gold.note
-    };
-    return Response.json(normalize.success(goldData, { source: 'manual', cached: true, ttl: 86400 }));
+    // Fetch from SJC API with fallback to manual data
+    const goldData = await fetchCompleteVnGold();
+    
+    return Response.json(
+      normalize.success(goldData, { 
+        source: goldData.source, 
+        cached: true, 
+        ttl: 600 // 10 minutes
+      })
+    );
   } catch (error) {
     console.error('[API/VN/GOLD] Error:', error?.message);
-    return Response.json({ ok: false, error: 'Failed to load VN gold data', lastUpdated: null }, { status: 200 });
+    return Response.json(
+      { 
+        ok: false, 
+        error: 'Failed to load VN gold data', 
+        lastUpdated: null 
+      }, 
+      { status: 200 }
+    );
   }
 }

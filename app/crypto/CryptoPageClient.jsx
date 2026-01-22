@@ -272,6 +272,7 @@ export default function CryptoPageClient() {
           referenceData={referenceData}
           lastUpdated={lastUpdated}
           onConvert={handleConvert}
+          usdToVndRate={usdToVnd}
           disclaimerText="Giá crypto cập nhật mỗi 60 phút. Kiểm tra lại trên CoinGecko trước khi giao dịch."
         />
       </div>

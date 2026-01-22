@@ -3,6 +3,117 @@
 import { useEffect, useMemo, useState } from 'react';
 import LastUpdated from './LastUpdated';
 import { addUTMParams, getAffiliatesByCategory } from '@/data/affiliateConfig';
+import exchangeFees from '@/data/exchangeFees.json';
+
+// Helper: Convert number to Vietnamese words
+function numberToVietnameseWords(amount) {
+  const rounded = Math.round(amount);
+  if (rounded === 0) return 'không';
+
+  const ones = ['', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+  const units = ['', 'nghìn', 'triệu', 'tỷ'];
+
+  function readGroup(num) {
+    if (num === 0) return '';
+    const hundred = Math.floor(num / 100);
+    const ten = Math.floor((num % 100) / 10);
+    const one = num % 10;
+
+    let result = '';
+    if (hundred > 0) {
+      result += ones[hundred] + ' trăm';
+    }
+    if (ten > 0) {
+      if (result && ten === 0 && one > 0) {
+        result += ' lẻ';
+      } else {
+        if (result) result += ' ';
+        result += ten === 1 ? 'mười' : ones[ten] + ' mươi';
+      }
+    } else if (hundred > 0 && one > 0) {
+      result += ' lẻ';
+    }
+    if (one > 0) {
+      if (result) result += ' ';
+      if (one === 1 && ten > 1) {
+        result += 'mốt';
+      } else if (one === 5 && ten >= 1) {
+        result += 'lăm';
+      } else {
+        result += ones[one];
+      }
+    }
+    return result;
+  }
+
+  const groups = [];
+  let num = rounded;
+  while (num > 0) {
+    groups.push(num % 1000);
+    num = Math.floor(num / 1000);
+  }
+
+  let result = '';
+  for (let i = groups.length - 1; i >= 0; i--) {
+    const group = groups[i];
+    if (group > 0) {
+      if (result) result += ' ';
+      result += readGroup(group);
+      if (i > 0 && i < units.length) {
+        result += ' ' + units[i];
+      } else if (i >= units.length) {
+        // Handle larger numbers: nghìn tỷ, triệu tỷ, etc.
+        const unitIndex = i % units.length;
+        const multiplier = Math.floor(i / units.length);
+        if (unitIndex === 0 && multiplier > 0) {
+          result += ' ' + units[3]; // tỷ
+          for (let j = 1; j < multiplier; j++) {
+            result += ' ' + units[3];
+          }
+        } else {
+          result += ' ' + units[unitIndex];
+          for (let j = 0; j < multiplier; j++) {
+            result += ' ' + units[3];
+          }
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+// Helper: Estimate transaction fees
+function estimateFees({ amountInput, from, to, resultValue, usdToVndRate = 25000, exchange = 'default' }) {
+  const isVNDInvolved = from === 'VND' || to === 'VND';
+  
+  // Get exchange-specific fees
+  const exchangeFeeConfig = exchangeFees[exchange] || exchangeFees.default;
+  const spreadPercent = isVNDInvolved ? 0.5 : 0.2;
+  const spotFeePercent = exchangeFeeConfig.spotFeePercent;
+  
+  // Network fee: 0 if target is VND, otherwise ~1 USD equivalent
+  const networkFeeVND = to === 'VND' ? 0 : (usdToVndRate || 25000);
+  
+  // Calculate spread and spot fee based on result value in VND
+  let resultInVND = resultValue;
+  if (to !== 'VND') {
+    // Convert result to VND using the actual USD/VND rate
+    // Crypto prices are in USD, so we need to convert to VND
+    resultInVND = resultValue * (usdToVndRate || 25000); // approximate conversion
+  }
+  
+  const spreadFeeVND = (resultInVND * spreadPercent) / 100;
+  const spotFeeVND = (resultInVND * spotFeePercent) / 100;
+  const totalFeeVND = spreadFeeVND + spotFeeVND + networkFeeVND;
+  
+  return {
+    spreadPercent,
+    spotFeePercent,
+    networkFeeVND,
+    totalFeeVND,
+  };
+}
 
 export default function ConverterForm({
   mode = 'fx',
@@ -11,6 +122,7 @@ export default function ConverterForm({
   onConvert = null,
   referenceData = null,
   lastUpdated = null,
+  usdToVndRate = null,
   disclaimerText = '',
 }) {
   const [amount, setAmount] = useState('1');
@@ -20,6 +132,7 @@ export default function ConverterForm({
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resultMeta, setResultMeta] = useState(null);
+  const [selectedExchange, setSelectedExchange] = useState('default');
 
   // Detect page category from mode to serve contextual affiliate suggestion
   const category = useMemo(() => {
@@ -199,7 +312,90 @@ export default function ConverterForm({
           <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-green-50 border border-green-100">
             <p className="text-sm text-gray-600">Kết quả</p>
             <p className="text-2xl font-bold text-emerald-700">
-              {resultMeta.amount} {resultMeta.from} = {result.toFixed(4)} {resultMeta.to}
+              {resultMeta.amount} {resultMeta.from} = {(() => {
+                // Adaptive decimal formatting
+                const isCrypto = !['USD', 'VND', 'EUR', 'GBP', 'JPY'].includes(resultMeta.to);
+                if (isCrypto) {
+                  // BTC and ETH: 8 decimals
+                  if (['bitcoin', 'ethereum'].includes(resultMeta.to)) {
+                    return result.toFixed(8);
+                  }
+                  // Other cryptos: 6-8 decimals based on value
+                  if (result < 0.0001) {
+                    return result.toFixed(8);
+                  }
+                  return result.toFixed(6);
+                }
+                // Fiat currencies
+                if (resultMeta.to === 'VND') {
+                  return Math.round(result).toLocaleString();
+                }
+                return result.toFixed(4);
+              })()} {resultMeta.to}
+            </p>
+            {resultMeta.to === 'VND' && (
+              <p className="text-sm text-emerald-600 mt-2">
+                Bằng chữ: {numberToVietnameseWords(result)} đồng
+              </p>
+            )}
+            {/* Display USD/VND rate when VND is involved */}
+            {(resultMeta.from === 'VND' || resultMeta.to === 'VND') && usdToVndRate && (
+              <p className="text-xs text-emerald-600/80 mt-1.5">
+                Tỷ giá quy đổi: 1 USD ≈ {usdToVndRate.toLocaleString()} VND
+              </p>
+            )}
+          </div>
+
+          {/* Fee Estimation Block */}
+          <div className="mt-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-xs font-semibold text-gray-700">Ước tính phí giao dịch (tham khảo)</p>
+              <div className="flex items-center gap-2">
+                <label className="text-[10px] text-gray-600">Sàn (tuỳ chọn):</label>
+                <select
+                  value={selectedExchange}
+                  onChange={(e) => setSelectedExchange(e.target.value)}
+                  className="text-[10px] px-2 py-0.5 border border-gray-300 rounded bg-white text-gray-700"
+                >
+                  <option value="default">Ước tính chung</option>
+                  <option value="binance">Binance</option>
+                  <option value="okx">OKX</option>
+                  <option value="bybit">Bybit</option>
+                </select>
+              </div>
+            </div>
+            {(() => {
+              const fees = estimateFees({
+                amountInput: resultMeta.amount,
+                from: resultMeta.from,
+                to: resultMeta.to,
+                resultValue: result,
+                usdToVndRate: usdToVndRate || 25000,
+                exchange: selectedExchange,
+              });
+              return (
+                <div className="space-y-1 text-xs text-gray-600">
+                  <div className="flex justify-between">
+                    <span>Spread:</span>
+                    <span>{fees.spreadPercent}%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Phí spot trading:</span>
+                    <span>{fees.spotFeePercent}%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Phí mạng:</span>
+                    <span>{fees.networkFeeVND.toLocaleString()} VND</span>
+                  </div>
+                  <div className="flex justify-between border-t border-gray-300 pt-1 mt-1 font-semibold text-gray-800">
+                    <span>Tổng phí ước tính:</span>
+                    <span>{Math.round(fees.totalFeeVND).toLocaleString()} VND</span>
+                  </div>
+                </div>
+              );
+            })()}
+            <p className="text-[10px] text-gray-500 mt-2 italic">
+              Ước tính tham khảo, phí thực tế phụ thuộc sàn & thời điểm.
             </p>
           </div>
 

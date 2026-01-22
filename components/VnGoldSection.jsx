@@ -107,14 +107,14 @@ export default function VnGoldSection({ vnGold, vnGoldError, xauUsd, usdToVnd, a
         {comparison && (
           <div className="grid md:grid-cols-3 gap-3 mb-4">
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-              <div className="text-xs text-blue-700 font-semibold mb-1">VÀng Quốc Tế (quy đổi)</div>
+              <div className="text-xs text-blue-700 font-semibold mb-1">🌍 QUỐC TẾ (quy đổi tham khảo)</div>
               <div className="text-xl font-bold text-blue-900">{comparison.intlVnd.toLocaleString('vi-VN')} ₫</div>
-              <div className="text-xs text-blue-600 mt-1">1 lượng (37.5g)</div>
+              <div className="text-xs text-blue-600 mt-1">1 lượng (37.5g) theo XAU/USD</div>
             </div>
             <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-4 border border-amber-200">
-              <div className="text-xs text-amber-700 font-semibold mb-1">VÀNG VN (trung bình SJC)</div>
+              <div className="text-xs text-amber-700 font-semibold mb-1">🇻🇳 VIỆT NAM (thị trường thực tế)</div>
               <div className="text-xl font-bold text-amber-900">{comparison.vnAvg.toLocaleString('vi-VN')} ₫</div>
-              <div className="text-xs text-amber-600 mt-1">1 lượng SJC</div>
+              <div className="text-xs text-amber-600 mt-1">1 lượng SJC (trung bình)</div>
             </div>
             <div className={`bg-gradient-to-br ${comparison.diff >= 0 ? 'from-red-50 to-red-100 border-red-200' : 'from-green-50 to-green-100 border-green-200'} rounded-xl p-4 border`}>
               <div className={`text-xs font-semibold mb-1 ${comparison.diff >= 0 ? 'text-red-700' : 'text-green-700'}`}>CHÊNH LỆCH</div>
@@ -122,7 +122,7 @@ export default function VnGoldSection({ vnGold, vnGoldError, xauUsd, usdToVnd, a
                 {comparison.diff >= 0 ? '+' : ''}{comparison.diff.toLocaleString('vi-VN')} ₫
               </div>
               <div className={`text-xs mt-1 ${comparison.diff >= 0 ? 'text-red-600' : 'text-green-600'}`}>
-                {comparison.diffPercent >= 0 ? '+' : ''}{comparison.diffPercent.toFixed(2)}% so với quốc tế
+                {comparison.diffPercent >= 0 ? '+' : ''}{Number.isFinite(comparison.diffPercent) ? comparison.diffPercent.toFixed(2) : 'N/A'}% so với quốc tế
               </div>
             </div>
           </div>
@@ -158,13 +158,13 @@ export default function VnGoldSection({ vnGold, vnGoldError, xauUsd, usdToVnd, a
                   <td className="px-4 py-3 text-right">
                     <div className="font-bold text-green-700">{item.buy.toLocaleString('vi-VN')} ₫</div>
                     {goldIntlVnd && (
-                      <div className="text-xs text-gray-500">≈ ${(item.buy / usdToVnd).toFixed(0)}</div>
+                      <div className="text-xs text-gray-500">≈ ${Number.isFinite(item.buy) && Number.isFinite(usdToVnd) && usdToVnd > 0 ? (item.buy / usdToVnd).toFixed(0) : 'N/A'}</div>
                     )}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <div className="font-bold text-red-700">{item.sell.toLocaleString('vi-VN')} ₫</div>
                     {goldIntlVnd && (
-                      <div className="text-xs text-gray-500">≈ ${(item.sell / usdToVnd).toFixed(0)}</div>
+                      <div className="text-xs text-gray-500">≈ ${Number.isFinite(item.sell) && Number.isFinite(usdToVnd) && usdToVnd > 0 ? (item.sell / usdToVnd).toFixed(0) : 'N/A'}</div>
                     )}
                   </td>
                 </tr>
@@ -187,7 +187,7 @@ export default function VnGoldSection({ vnGold, vnGoldError, xauUsd, usdToVnd, a
         {goldIntlVnd && (
           <div className="text-xs text-gray-600 pt-2 border-t border-gray-100 space-y-1">
             <p>💱 Quy đổi: <strong>1 USD = {usdToVnd.toLocaleString('vi-VN')} VND</strong></p>
-            <p>🪙 XAU/USD: <strong>${xauUsd.toFixed(2)}/oz</strong> → <strong>{goldIntlVnd.gramVnd.toFixed(0)} ₫/gram</strong> → <strong>{goldIntlVnd.luongVnd.toLocaleString('vi-VN')} ₫/lượng</strong></p>
+            <p>🪙 XAU/USD: <strong>${Number.isFinite(xauUsd) ? xauUsd.toFixed(2) : 'N/A'}/oz</strong> → <strong>{Number.isFinite(goldIntlVnd.gramVnd) ? goldIntlVnd.gramVnd.toFixed(0) : 'N/A'} ₫/gram</strong> → <strong>{goldIntlVnd.luongVnd.toLocaleString('vi-VN')} ₫/lượng</strong></p>
           </div>
         )}
       </div>

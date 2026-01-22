@@ -28,8 +28,7 @@ export default function GoldPageClient() {
   const [vnGoldError, setVnGoldError] = useState(null);
   const [selectedGoldType, setSelectedGoldType] = useState('xau'); // New state
   const [gatewayFxRate, setGatewayFxRate] = useState(null);
-  const [gatewayGold, setGatewayGold] = useState(null);
-
+  const [gatewayGold, setGatewayGold] = useState(null);  const [goldMeta, setGoldMeta] = useState(null); // Diagnostics metadata
   const { usdToVnd, fxError, fxLoading, refetchFx } = useUsdToVnd({
     prefetchedRate: gatewayFxRate,
     disableFetch: true,
@@ -41,6 +40,28 @@ export default function GoldPageClient() {
 
   const REFRESH_INTERVAL_MS = 120 * 60 * 1000;
 
+  // Dev-only validator for XAU conversions
+  useEffect(() => {
+    if (referenceData?.xauUsd && usdToVnd) {
+      const xauUsd = referenceData.xauUsd;
+      const usdPerGram = xauUsd / OZ_TO_GRAM;
+      const vndPerOunce = xauUsd * usdToVnd;
+      const vndPerGram = usdPerGram * usdToVnd;
+
+      if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEBUG === 'true') {
+        console.log('[Gold Page - Price Validator]', {
+          xauUsd: Number.isFinite(xauUsd) ? `${xauUsd.toFixed(2)} USD/oz` : 'N/A',
+          usdPerGram: Number.isFinite(usdPerGram) ? `${usdPerGram.toFixed(2)} USD/g` : 'N/A',
+          usdToVndRate: usdToVnd,
+          vndPerOunce: Number.isFinite(vndPerOunce) ? `${vndPerOunce.toLocaleString()} VND/oz` : 'N/A',
+          vndPerGram: Number.isFinite(vndPerGram) ? `${vndPerGram.toLocaleString()} VND/g` : 'N/A',
+          updatedAt: lastUpdated,
+          isReasonable: xauUsd >= 500 && xauUsd <= 20000,
+        });
+      }
+    }
+  }, [referenceData, usdToVnd, lastUpdated]);
+
   const fetchGoldPrice = useCallback(async () => {
     setRefreshing(true);
     try {
@@ -51,12 +72,31 @@ export default function GoldPageClient() {
 
       const fx = json?.data?.fx || {};
       const rates = fx?.rates || fx;
-      const goldPrice = json?.data?.gold || json?.data?.gold?.price;
+      
+      // Extract gold price correctly
+      let goldPrice = null;
+      if (typeof json?.data?.gold === 'number') {
+        goldPrice = json.data.gold;
+      } else if (json?.data?.gold?.xauUsd) {
+        goldPrice = json.data.gold.xauUsd;
+      } else if (json?.data?.gold?.price) {
+        goldPrice = json.data.gold.price;
+      }
+      
+      const goldSource = json?.sources?.gold || 'unknown';
 
       setGatewayFxRate(rates?.VND || null);
       setGatewayGold(goldPrice);
       setReferenceData({ xauUsd: goldPrice });
       setLastUpdated(json.updatedAt || json?.sources?.gold?.updatedAt || null);
+      
+      // Capture metadata for diagnostics
+      setGoldMeta({
+        source: goldSource,
+        updatedAt: json.updatedAt || json?.sources?.gold?.updatedAt,
+        status: json.status,
+      });
+      
       setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : null);
     } catch (err) {
       console.error('[gold] Price Gateway error:', err.message);
@@ -263,10 +303,10 @@ export default function GoldPageClient() {
           <div className="relative space-y-3 text-center">
             <p className="text-xs uppercase tracking-[0.2em] text-white/80 font-semibold">Gold • XAU</p>
             <h1 className="text-3xl md:text-4xl font-bold drop-shadow-sm">
-              Giá vàng quốc tế & quy đổi đơn vị
+              Giá vàng quốc tế (tham khảo) & Vàng Việt Nam
             </h1>
             <p className="text-base md:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed">
-              XAU/USD từ thị trường thế giới. Chuyển đổi ounce, gram, chỉ, cây — chuẩn cho người Việt.
+              XAU/USD từ thị trường thế giới (tham khảo). Giá vàng trong nước từ các doanh nghiệp kinh doanh vàng Việt Nam.
             </p>
             <div className="flex flex-wrap justify-center gap-2 text-[11px] font-semibold text-white/70 pt-1">
               <span className="px-3 py-1 rounded-full bg-white/20">Cập nhật: {lastUpdated ? new Date(lastUpdated).toLocaleString() : 'Đang tải...'}</span>
@@ -389,20 +429,36 @@ export default function GoldPageClient() {
         />
       </div>
 
+      <div className="max-w-5xl mx-auto px-4 mb-4">
+        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">ℹ️</span>
+            <div className="flex-1">
+              <h4 className="text-sm font-bold text-blue-900 mb-1">Lưu ý quan trọng</h4>
+              <p className="text-sm text-blue-800 leading-relaxed">
+                <strong>Giá vàng quốc tế (XAU)</strong> là giá tham khảo từ thị trường thế giới, dùng cho việc quy đổi lý thuyết. 
+                <strong>Giá vàng trong nước</strong> có thể chênh lệch lớn so với giá quốc tế do cơ chế thị trường, quản lý, và chính sách nhập khẩu. 
+                Vì vậy, khi giao dịch vàng, hãy tham khảo giá của các doanh nghiệp trong nước (SJC, PNJ, Doji, v.v.).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="grid lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
         <PriceCard
-          title="Giá vàng (XAU / USD)"
+          title="Giá vàng quốc tế (XAU/USD)"
           price={referenceData?.xauUsd || 0}
-          unit="USD mỗi ounce troy"
+          unit="USD mỗi ounce troy - Tham khảo"
           loading={!referenceData}
           prefix="$"
           decimals={2}
           tone="amber"
         />
         <PriceCard
-          title="Giá 1 oz → VND"
+          title="Quy đổi 1 oz → VND"
           price={referenceData?.xauUsd && usdToVnd ? referenceData.xauUsd * usdToVnd : 0}
-          unit="Quy đổi tham khảo"
+          unit="Giá quốc tế quy đổi (không phải giá VN)"
           loading={!referenceData || !usdToVnd}
           prefix="₫"
           decimals={0}
@@ -410,15 +466,35 @@ export default function GoldPageClient() {
           locale="vi-VN"
         />
         <PriceCard
-          title="Giá 1 gram (USD)"
+          title="Quy đổi 1 gram (USD)"
           price={referenceData?.xauUsd ? referenceData.xauUsd / 31.1035 : 0}
-          unit="USD mỗi gram"
+          unit="USD mỗi gram - Tham khảo"
           loading={!referenceData}
           prefix="$"
           decimals={2}
           tone="gray"
         />
       </div>
+
+      {/* Diagnostics - Dev Only */}
+      {(process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEBUG === 'true') && goldMeta && referenceData && (
+        <div className="max-w-5xl mx-auto px-4">
+          <div className="bg-gray-50 border border-gray-300 rounded-lg p-3 text-xs font-mono">
+            <div className="font-bold text-gray-700 mb-2">🔍 XAU Diagnostics (Dev Only)</div>
+            <div className="grid grid-cols-2 gap-2 text-gray-600">
+              <div><strong>xauUsd:</strong> {Number.isFinite(referenceData.xauUsd) ? `$${referenceData.xauUsd.toFixed(2)}` : 'N/A'}</div>
+              <div><strong>source:</strong> {goldMeta.source}</div>
+              <div><strong>updatedAt:</strong> {goldMeta.updatedAt ? new Date(goldMeta.updatedAt).toLocaleTimeString() : 'N/A'}</div>
+              <div>
+                <strong>ageMinutes:</strong> {goldMeta.updatedAt ? Math.round((Date.now() - new Date(goldMeta.updatedAt).getTime()) / 60000) : 'N/A'}
+                {goldMeta.updatedAt && (Date.now() - new Date(goldMeta.updatedAt).getTime()) > 15 * 60 * 1000 && (
+                  <span className="ml-2 text-orange-600 font-bold">⚠️ Cache/Delayed</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <RefreshBar
         lastUpdated={lastUpdated}
@@ -444,10 +520,10 @@ export default function GoldPageClient() {
         </div>
       )}
 
-      <CollapsibleSection title="Bảng giá chi tiết" badge="USD & quy đổi">
+      <CollapsibleSection title="Bảng giá quốc tế (tham khảo)" badge="XAU quy đổi">
         <PriceTable
           data={goldTableData}
-          title="Quy đổi vàng theo đơn vị"
+          title="Quy đổi vàng theo đơn vị (Giá quốc tế)"
           currencyPrefix="$"
           valueFormatter={(v) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(v)}
           renderLabel={(key) => {

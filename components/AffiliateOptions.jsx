@@ -83,7 +83,8 @@ export default function AffiliateOptions({
             ) : (
               <a
                 href={affiliate.href}
-                rel="nofollow"
+                target="_blank"
+                rel="nofollow sponsored noopener"
                 className="block text-center px-3 py-2 rounded-md text-xs font-semibold transition-colors bg-blue-600 text-white hover:bg-blue-700"
               >
                 {affiliate.cta}
