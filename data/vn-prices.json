@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-27T17:00:00+07:00",
+  "updatedAt": "2026-01-28T17:00:00+07:00",
   "source": "Cập nhật thủ công theo thị trường Việt Nam",
   "description": "File này chỉ dùng cho FALLBACK khi API không khả dụng và giá xăng dầu (cập nhật thủ công 2 lần/tháng)",
   "gold": {
@@ -8,36 +8,36 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 175300000,
-        "sell": 177300000,
+        "buy": 178100000,
+        "sell": 180600000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 173000000,
-        "sell": 176000000,
+        "buy": 178100000,
+        "sell": 180600000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 174300000,
-        "sell": 177300000,
+        "buy": 178100000,
+        "sell": 180600000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Doji",
         "type": "Vàng SJC",
-        "buy": 175300000,
-        "sell": 177300000,
+        "buy": 178100000,
+        "sell": 180600000,
         "logo": "/logos/gold/DOJI.jpg"
       },
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 173500000,
-        "sell": 176500000,
+        "buy": 177500000,
+        "sell": 180600000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -93,11 +93,11 @@
         "chi": { "label": "Chỉ (3.75g)", "unit": "chỉ", "fromOz": 8.2942618133, "icon": "💍" },
         "luong": { "label": "Lượng (37.5g)", "unit": "lượng", "fromOz": 0.8294261813, "icon": "⭐" },
         "cay": { "label": "Cây (37.5g)", "unit": "cây", "fromOz": 0.8294261813, "icon": "🏅" },
-        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 177300000, "icon": "🥇" },
-        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 176000000, "icon": "💎" },
-        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 177300000, "icon": "⭐" },
-        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 177300000, "icon": "🌟" },
-        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 176500000, "icon": "✨" }
+        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 180600000, "icon": "🥇" },
+        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 180600000, "icon": "💎" },
+        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 180600000, "icon": "⭐" },
+        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 180600000, "icon": "🌟" },
+        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 180600000, "icon": "✨" }
       }
     },
     "oil": {
