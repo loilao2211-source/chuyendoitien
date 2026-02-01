@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-01-31T17:15:00+07:00",
+  "updatedAt": "2026-02-01T09:30:00+07:00",
   "source": "Cập nhật thủ công theo thị trường Việt Nam",
   "description": "File này chỉ dùng cho FALLBACK khi API không khả dụng và giá xăng dầu (cập nhật thủ công 2 lần/tháng)",
   "gold": {
@@ -36,8 +36,8 @@
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 168500000,
-        "sell": 171500000,
+        "buy": 168800000,
+        "sell": 171800000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -97,7 +97,7 @@
         "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 171500000, "icon": "💎" },
         "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 172000000, "icon": "⭐" },
         "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 172000000, "icon": "🌟" },
-        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 171500000, "icon": "✨" }
+        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 171800000, "icon": "✨" }
       }
     },
     "oil": {
