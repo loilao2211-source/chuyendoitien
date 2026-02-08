@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-01T09:30:00+07:00",
+  "updatedAt": "2026-02-08T12:00:00+07:00",
   "source": "Cập nhật thủ công theo thị trường Việt Nam",
   "description": "File này chỉ dùng cho FALLBACK khi API không khả dụng và giá xăng dầu (cập nhật thủ công 2 lần/tháng)",
   "gold": {
@@ -8,36 +8,36 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 169000000,
-        "sell": 172000000,
+        "buy": 176300000,
+        "sell": 179300000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 168500000,
-        "sell": 171500000,
+        "buy": 176300000,
+        "sell": 179300000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 169000000,
-        "sell": 172000000,
+        "buy": 176300000,
+        "sell": 179300000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Doji",
         "type": "Vàng SJC",
-        "buy": 169000000,
-        "sell": 172000000,
+        "buy": 176300000,
+        "sell": 179300000,
         "logo": "/logos/gold/DOJI.jpg"
       },
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 168800000,
-        "sell": 171800000,
+        "buy": 176300000,
+        "sell": 179300000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -50,32 +50,32 @@
       {
         "code": "E5 RON92",
         "name": "Xăng E5 RON 92",
-        "region1": 18339,
-        "region2": 18699
+        "region1": 18430,
+        "region2": 18790
       },
       {
         "code": "RON95-III",
         "name": "Xăng RON 95-III",
-        "region1": 18845,
-        "region2": 19215
+        "region1": 18880,
+        "region2": 19250
       },
       {
         "code": "DO 0.05S",
         "name": "Dầu diesel 0.05S-II",
-        "region1": 18173,
-        "region2": 18533
+        "region1": 18450,
+        "region2": 18810
       },
       {
         "code": "Kerosene",
         "name": "Dầu hỏa",
-        "region1": 18176,
-        "region2": 18536
+        "region1": 18390,
+        "region2": 18750
       },
       {
         "code": "Mazut",
         "name": "Dầu mazut 180CST 3.5S",
-        "region1": 14633,
-        "region2": 14923
+        "region1": 15150,
+        "region2": 15450
       }
     ],
     "note": "Giá bán lẻ tối đa theo kỳ điều hành. Cập nhật thủ công, không realtime. Lưu ý: mazut tính theo VND/kg."
@@ -93,11 +93,11 @@
         "chi": { "label": "Chỉ (3.75g)", "unit": "chỉ", "fromOz": 8.2942618133, "icon": "💍" },
         "luong": { "label": "Lượng (37.5g)", "unit": "lượng", "fromOz": 0.8294261813, "icon": "⭐" },
         "cay": { "label": "Cây (37.5g)", "unit": "cây", "fromOz": 0.8294261813, "icon": "🏅" },
-        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 172000000, "icon": "🥇" },
-        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 171500000, "icon": "💎" },
-        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 172000000, "icon": "⭐" },
-        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 172000000, "icon": "🌟" },
-        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 171800000, "icon": "✨" }
+        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 179300000, "icon": "🥇" },
+        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 179300000, "icon": "💎" },
+        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 179300000, "icon": "⭐" },
+        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 179300000, "icon": "🌟" },
+        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 179300000, "icon": "✨" }
       }
     },
     "oil": {
@@ -108,9 +108,9 @@
         "barrel": { "label": "Barrel", "unit": "bbl", "fromBarrel": 1 },
         "liter": { "label": "Liter", "unit": "L", "fromBarrel": 158.987 },
         "gallon_us": { "label": "US Gallon", "unit": "gal", "fromBarrel": 42 },
-        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18339 },
-        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18845 },
-        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18173 }
+        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18430 },
+        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18880 },
+        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 18450 }
       }
     }
   }
