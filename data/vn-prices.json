@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-09T12:00:00+07:00",
+  "updatedAt": "2026-03-09T05:01:00+07:00",
   "source": "Cập nhật thủ công theo thị trường Việt Nam",
   "description": "File này chỉ dùng cho FALLBACK khi API không khả dụng và giá xăng dầu (cập nhật thủ công 2 lần/tháng)",
   "gold": {
@@ -50,32 +50,32 @@
       {
         "code": "E5 RON92",
         "name": "Xăng E5 RON 92",
-        "region1": 19748,
-        "region2": 20108
+        "region1": 25220,
+        "region2": 25720
       },
       {
         "code": "RON95-III",
         "name": "Xăng RON 95-III",
-        "region1": 20392,
-        "region2": 20762
+        "region1": 27040,
+        "region2": 27580
       },
       {
         "code": "DO 0.05S",
         "name": "Dầu diesel 0.05S-II",
-        "region1": 19549,
-        "region2": 19909
+        "region1": 30230,
+        "region2": 30830
       },
       {
         "code": "Kerosene",
         "name": "Dầu hỏa",
-        "region1": 19664,
-        "region2": 20024
+        "region1": 35090,
+        "region2": 35790
       },
       {
         "code": "Mazut",
         "name": "Dầu mazut 180CST 3.5S",
-        "region1": 15936,
-        "region2": 16226
+        "region1": 16160,
+        "region2": 16480
       }
     ],
     "note": "Giá bán lẻ tối đa theo kỳ điều hành. Cập nhật thủ công, không realtime. Lưu ý: mazut tính theo VND/kg."
@@ -108,9 +108,9 @@
         "barrel": { "label": "Barrel", "unit": "bbl", "fromBarrel": 1 },
         "liter": { "label": "Liter", "unit": "L", "fromBarrel": 158.987 },
         "gallon_us": { "label": "US Gallon", "unit": "gal", "fromBarrel": 42 },
-        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 19748 },
-        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 20392 },
-        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 19549 }
+        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 25220 },
+        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 27040 },
+        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 30230 }
       }
     }
   }
