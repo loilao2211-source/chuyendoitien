@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-17T17:30:00+07:00",
+  "updatedAt": "2026-03-31T12:00:00+07:00",
   "source": "Cập nhật thủ công theo thị trường Việt Nam",
   "description": "File này chỉ dùng cho FALLBACK khi API không khả dụng và giá xăng dầu (cập nhật thủ công 2 lần/tháng)",
   "gold": {
@@ -8,36 +8,36 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 180000000,
-        "sell": 183000000,
+        "buy": 171900000,
+        "sell": 174900000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 179900000,
-        "sell": 182900000,
+        "buy": 171000000,
+        "sell": 174900000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 180000000,
-        "sell": 183000000,
+        "buy": 171000000,
+        "sell": 174900000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Doji",
         "type": "Vàng SJC",
-        "buy": 180000000,
-        "sell": 183000000,
+        "buy": 171900000,
+        "sell": 174900000,
         "logo": "/logos/gold/DOJI.jpg"
       },
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 179800000,
-        "sell": 182800000,
+        "buy": 171900000,
+        "sell": 174900000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -50,20 +50,20 @@
       {
         "code": "E5 RON92",
         "name": "Xăng E5 RON 92",
-        "region1": 22500,
-        "region2": 22950
+        "region1": 23320,
+        "region2": 23320
       },
       {
         "code": "RON95-III",
         "name": "Xăng RON 95-III",
-        "region1": 25570,
-        "region2": 26080
+        "region1": 24730,
+        "region2": 24730
       },
       {
         "code": "DO 0.05S",
         "name": "Dầu diesel 0.05S-II",
-        "region1": 27020,
-        "region2": 27560
+        "region1": 35640,
+        "region2": 35640
       },
       {
         "code": "Kerosene",
@@ -93,11 +93,11 @@
         "chi": { "label": "Chỉ (3.75g)", "unit": "chỉ", "fromOz": 8.2942618133, "icon": "💍" },
         "luong": { "label": "Lượng (37.5g)", "unit": "lượng", "fromOz": 0.8294261813, "icon": "⭐" },
         "cay": { "label": "Cây (37.5g)", "unit": "cây", "fromOz": 0.8294261813, "icon": "🏅" },
-        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 183000000, "icon": "🥇" },
-        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 182900000, "icon": "💎" },
-        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 183000000, "icon": "⭐" },
-        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 183000000, "icon": "🌟" },
-        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 182800000, "icon": "✨" }
+        "vn_sjc": { "label": "SJC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 174900000, "icon": "🥇" },
+        "vn_pnj": { "label": "PNJ (VND/lượng)", "unit": "VND/lượng", "priceVnd": 174900000, "icon": "💎" },
+        "vn_btmc": { "label": "BTMC (VND/lượng)", "unit": "VND/lượng", "priceVnd": 174900000, "icon": "⭐" },
+        "vn_doji": { "label": "DOJI (VND/lượng)", "unit": "VND/lượng", "priceVnd": 174900000, "icon": "🌟" },
+        "vn_baotin": { "label": "Phú Quý (VND/lượng)", "unit": "VND/lượng", "priceVnd": 174900000, "icon": "✨" }
       }
     },
     "oil": {
@@ -108,9 +108,9 @@
         "barrel": { "label": "Barrel", "unit": "bbl", "fromBarrel": 1 },
         "liter": { "label": "Liter", "unit": "L", "fromBarrel": 158.987 },
         "gallon_us": { "label": "US Gallon", "unit": "gal", "fromBarrel": 42 },
-        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 22500 },
-        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 25570 },
-        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 27020 }
+        "vn_e5": { "label": "Xăng E5 RON92 (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 23320 },
+        "vn_ron95": { "label": "Xăng RON95-III (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 24730 },
+        "vn_do": { "label": "Dầu DO 0.05S (VND/L)", "unit": "L", "fromBarrel": 158.987, "priceVnd": 35640 }
       }
     }
   }
