@@ -56,11 +56,6 @@ const softwareSchema = {
     price: '0',
     priceCurrency: 'VND',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.8',
-    ratingCount: '1250',
-  },
 };
 
 export default function RootLayout({ children }) {

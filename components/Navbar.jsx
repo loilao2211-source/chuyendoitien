@@ -5,9 +5,10 @@ import Link from 'next/link';
 const links = [
   { href: '/', label: 'Dashboard' },
   { href: '/currency', label: 'Tiền tệ' },
-  { href: '/crypto', label: 'Tiền điện tử' },
+  { href: '/crypto', label: 'Crypto' },
   { href: '/gold', label: 'Vàng' },
   { href: '/oil', label: 'Dầu' },
+  { href: '/blog', label: 'Blog' },
 ];
 
 export default function Navbar() {
@@ -38,3 +39,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

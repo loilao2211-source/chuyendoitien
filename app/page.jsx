@@ -130,6 +130,60 @@ export default function Dashboard() {
       {/* Market Overview Section */}
       <MarketOverview />
 
+      {/* Popular Search Pages - GEO Internal Linking */}
+      <div className="max-w-5xl mx-auto px-4 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Tìm kiếm phổ biến</h2>
+        <div className="grid md:grid-cols-3 gap-4">
+          <Link href="/usd-vnd" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">💵</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              Tỷ giá USD/VND hôm nay
+            </h3>
+            <p className="text-sm text-gray-600">1 USD bằng bao nhiêu VND?</p>
+          </Link>
+          
+          <Link href="/100-usd-vnd" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">💰</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              100 USD = ? VND
+            </h3>
+            <p className="text-sm text-gray-600">Quy đổi nhanh 100 đô la</p>
+          </Link>
+          
+          <Link href="/usdt-vnd" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">🪙</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              Tỷ giá USDT/VND
+            </h3>
+            <p className="text-sm text-gray-600">So sánh USDT vs USD</p>
+          </Link>
+          
+          <Link href="/gia-vang-hom-nay" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">✨</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              Giá vàng hôm nay
+            </h3>
+            <p className="text-sm text-gray-600">XAU/USD, vàng SJC Việt Nam</p>
+          </Link>
+          
+          <Link href="/gia-dau-the-gioi-hom-nay" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">🛢️</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              Giá dầu thế giới hôm nay
+            </h3>
+            <p className="text-sm text-gray-600">Brent & WTI</p>
+          </Link>
+          
+          <Link href="/phuong-phap-du-lieu" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-lg transition group">
+            <div className="text-3xl mb-2">📊</div>
+            <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 mb-1">
+              Phương pháp dữ liệu
+            </h3>
+            <p className="text-sm text-gray-600">Nguồn & độ chính xác</p>
+          </Link>
+        </div>
+      </div>
+
       <div className="glass-panel p-6 rounded-2xl max-w-5xl mx-auto border border-white/30 mx-4">
         <h2 className="text-lg font-semibold text-gray-900 mb-3">Cách hoạt động</h2>
         <ul className="text-sm text-gray-700 grid md:grid-cols-2 gap-3">

@@ -1,0 +1,26 @@
+name: Update Vietnam prices
+
+on:
+  schedule:
+    - cron: '10 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-vn-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run update:vn-prices
+      - name: Commit updated snapshot
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update vietnam price snapshot'
+          file_pattern: data/vn-prices.json

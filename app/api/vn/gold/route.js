@@ -3,7 +3,7 @@ import { fetchCompleteVnGold } from '@/services/vnGoldService';
 
 export async function GET() {
   try {
-    // Fetch from SJC API with fallback to manual data
+    // Fetch from live aggregators with fallback to manual data
     const goldData = await fetchCompleteVnGold();
     
     return Response.json(
