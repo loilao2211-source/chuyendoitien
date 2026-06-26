@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-26T01:15:07.000Z",
+  "updatedAt": "2026-06-26T07:35:04.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -8,36 +8,36 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 143200000,
-        "sell": 146200000,
+        "buy": 144000000,
+        "sell": 147000000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 143000000,
-        "sell": 146000000,
+        "buy": 143800000,
+        "sell": 146800000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 141000000,
-        "sell": 145000000,
+        "buy": 142300000,
+        "sell": 146000000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Doji",
         "type": "Vàng SJC",
         "buy": 143000000,
-        "sell": 146000000,
+        "sell": 146500000,
         "logo": "/logos/gold/DOJI.jpg"
       },
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 142500000,
-        "sell": 146000000,
+        "buy": 143000000,
+        "sell": 146500000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -130,31 +130,31 @@
         "vn_sjc": {
           "label": "SJC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 146200000,
+          "priceVnd": 147000000,
           "icon": "🥇"
         },
         "vn_pnj": {
           "label": "PNJ (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 146000000,
+          "priceVnd": 146800000,
           "icon": "💎"
         },
         "vn_btmc": {
           "label": "BTMC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 145000000,
+          "priceVnd": 146000000,
           "icon": "⭐"
         },
         "vn_doji": {
           "label": "DOJI (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 146000000,
+          "priceVnd": 146500000,
           "icon": "🌟"
         },
         "vn_baotin": {
           "label": "Phú Quý (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 146000000,
+          "priceVnd": 146500000,
           "icon": "✨"
         }
       }
