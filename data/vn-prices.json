@@ -1,10 +1,17 @@
 {
-  "updatedAt": "2026-06-26T18:14:24.000Z",
+  "updatedAt": "2026-06-27T01:10:04.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
     "unit": "VND/lượng (1 lượng = 10 chỉ = 37.5g)",
     "items": [
+      {
+        "brand": "SJC",
+        "type": "Vàng SJC 1L, 5c, 10c",
+        "buy": 144000000,
+        "sell": 147000000,
+        "logo": "/logos/gold/SJC.png"
+      },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
