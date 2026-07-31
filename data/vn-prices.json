@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-30T15:55:02.000Z",
+  "updatedAt": "2026-07-31T03:45:04.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -8,29 +8,29 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 137700000,
-        "sell": 141700000,
+        "buy": 138700000,
+        "sell": 142700000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 136700000,
-        "sell": 141600000,
+        "buy": 138000000,
+        "sell": 142500000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 139100000,
-        "sell": 143000000,
+        "buy": 139900000,
+        "sell": 143900000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 137700000,
-        "sell": 141700000,
+        "buy": 138700000,
+        "sell": 142700000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -123,19 +123,19 @@
         "vn_sjc": {
           "label": "SJC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 141700000,
+          "priceVnd": 142700000,
           "icon": "🥇"
         },
         "vn_pnj": {
           "label": "PNJ (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 141600000,
+          "priceVnd": 142500000,
           "icon": "💎"
         },
         "vn_btmc": {
           "label": "BTMC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 143000000,
+          "priceVnd": 143900000,
           "icon": "⭐"
         },
         "vn_doji": {
@@ -147,7 +147,7 @@
         "vn_baotin": {
           "label": "Phú Quý (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 141700000,
+          "priceVnd": 142700000,
           "icon": "✨"
         }
       }
