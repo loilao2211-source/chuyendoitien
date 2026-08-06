@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-06T08:50:05.000Z",
+  "updatedAt": "2026-08-06T14:30:04.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
