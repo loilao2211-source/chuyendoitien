@@ -9,7 +9,8 @@ const categoryRedirect = {
 };
 
 export async function GET(request, { params }) {
-  const id = params?.id;
+  const resolvedParams = await params;
+  const id = resolvedParams?.id;
   const affiliate = findAffiliateById(id);
 
   // If not found or outbound missing -> coming soon

@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "update:vn-prices": "node scripts/update-vn-prices.js",
+    "verify:finance": "node scripts/verify-finance.js",
+    "check:price-apis": "node scripts/check-price-apis.js",
     "lint": "next lint"
   },
   "dependencies": {

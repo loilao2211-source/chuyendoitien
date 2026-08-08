@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import LastUpdated from './LastUpdated';
 import { addUTMParams, getAffiliatesByCategory } from '@/data/affiliateConfig';
-import exchangeFees from '@/data/exchangeFees.json';
+import { estimateCryptoExitCosts } from '@/lib/cryptoCosts';
 
 // Helper: Convert number to Vietnamese words
 function numberToVietnameseWords(amount) {
@@ -83,38 +83,6 @@ function numberToVietnameseWords(amount) {
   return result;
 }
 
-// Helper: Estimate transaction fees
-function estimateFees({ amountInput, from, to, resultValue, usdToVndRate = 25000, exchange = 'default' }) {
-  const isVNDInvolved = from === 'VND' || to === 'VND';
-  
-  // Get exchange-specific fees
-  const exchangeFeeConfig = exchangeFees[exchange] || exchangeFees.default;
-  const spreadPercent = isVNDInvolved ? 0.5 : 0.2;
-  const spotFeePercent = exchangeFeeConfig.spotFeePercent;
-  
-  // Network fee: 0 if target is VND, otherwise ~1 USD equivalent
-  const networkFeeVND = to === 'VND' ? 0 : (usdToVndRate || 25000);
-  
-  // Calculate spread and spot fee based on result value in VND
-  let resultInVND = resultValue;
-  if (to !== 'VND') {
-    // Convert result to VND using the actual USD/VND rate
-    // Crypto prices are in USD, so we need to convert to VND
-    resultInVND = resultValue * (usdToVndRate || 25000); // approximate conversion
-  }
-  
-  const spreadFeeVND = (resultInVND * spreadPercent) / 100;
-  const spotFeeVND = (resultInVND * spotFeePercent) / 100;
-  const totalFeeVND = spreadFeeVND + spotFeeVND + networkFeeVND;
-  
-  return {
-    spreadPercent,
-    spotFeePercent,
-    networkFeeVND,
-    totalFeeVND,
-  };
-}
-
 export default function ConverterForm({
   mode = 'fx',
   fromOptions = [],
@@ -122,6 +90,7 @@ export default function ConverterForm({
   onConvert = null,
   referenceData = null,
   lastUpdated = null,
+  dataStatus = null,
   usdToVndRate = null,
   disclaimerText = '',
 }) {
@@ -163,6 +132,13 @@ export default function ConverterForm({
   }, [affiliatePick?.href, category]);
 
   const isDataReady = referenceData && Object.keys(referenceData).length > 0;
+  const statusCopy = dataStatus === 'estimated'
+    ? { text: 'Ước tính', className: 'text-amber-600' }
+    : dataStatus === 'stale'
+      ? { text: 'Stale', className: 'text-amber-600' }
+      : isDataReady
+        ? { text: 'Live', className: 'text-emerald-600' }
+        : { text: 'Loading', className: 'text-amber-600' };
 
   const swap = () => {
     setFrom(to);
@@ -219,7 +195,7 @@ export default function ConverterForm({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
           <span className="px-3 py-1 rounded-full bg-blue-50 text-blue-700 uppercase tracking-wide">{mode}</span>
-          {isDataReady ? <span className="text-emerald-600">● Live</span> : <span className="text-amber-600">● Loading</span>}
+          <span className={statusCopy.className}>● {statusCopy.text}</span>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-500">
           <span className="hidden sm:inline">Chọn nhanh:</span>
@@ -346,10 +322,11 @@ export default function ConverterForm({
             )}
           </div>
 
-          {/* Fee Estimation Block */}
+          {/* Crypto fee/tax estimation block */}
+          {mode === 'crypto' && (
           <div className="mt-3 p-3 rounded-lg border border-gray-200 bg-gray-50">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs font-semibold text-gray-700">Ước tính phí giao dịch (tham khảo)</p>
+              <p className="text-xs font-semibold text-gray-700">Ước tính phí, thuế khi rút khỏi sàn</p>
               <div className="flex items-center gap-2">
                 <label className="text-[10px] text-gray-600">Sàn (tuỳ chọn):</label>
                 <select
@@ -365,11 +342,12 @@ export default function ConverterForm({
               </div>
             </div>
             {(() => {
-              const fees = estimateFees({
+              const fees = estimateCryptoExitCosts({
                 amountInput: resultMeta.amount,
                 from: resultMeta.from,
                 to: resultMeta.to,
                 resultValue: result,
+                prices: referenceData,
                 usdToVndRate: usdToVndRate || 25000,
                 exchange: selectedExchange,
               });
@@ -387,17 +365,38 @@ export default function ConverterForm({
                     <span>Phí mạng:</span>
                     <span>{fees.networkFeeVND.toLocaleString()} VND</span>
                   </div>
+                  <div className="flex justify-between">
+                    <span>Phí rút VND:</span>
+                    <span>{fees.fiatWithdrawalFeeVND.toLocaleString()} VND</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Thuế TNCN tạm tính:</span>
+                    <span>
+                      {fees.personalIncomeTaxPercent}% ({Math.round(fees.personalIncomeTaxVND).toLocaleString()} VND)
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>VAT chuyển nhượng:</span>
+                    <span>{fees.vatPercent}%</span>
+                  </div>
                   <div className="flex justify-between border-t border-gray-300 pt-1 mt-1 font-semibold text-gray-800">
                     <span>Tổng phí ước tính:</span>
                     <span>{Math.round(fees.totalFeeVND).toLocaleString()} VND</span>
                   </div>
+                  {fees.netAfterExitVND !== null && (
+                    <div className="flex justify-between font-semibold text-emerald-700">
+                      <span>Còn lại sau phí/thuế:</span>
+                      <span>{Math.round(fees.netAfterExitVND).toLocaleString()} VND</span>
+                    </div>
+                  )}
                 </div>
               );
             })()}
             <p className="text-[10px] text-gray-500 mt-2 italic">
-              Ước tính tham khảo, phí thực tế phụ thuộc sàn & thời điểm.
+              Ước tính tham khảo. Thuế TNCN áp dụng khi bán/chuyển nhượng crypto ra fiat; phí thực tế phụ thuộc sàn, ngân hàng và thời điểm.
             </p>
           </div>
+          )}
 
           {affiliatePick && (
             <div className="mt-3 p-3 rounded-lg border border-blue-100 bg-blue-50/80 flex items-center justify-between gap-3 flex-wrap">

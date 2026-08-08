@@ -21,6 +21,7 @@ export default function CryptoPageClient() {
   const [referenceData, setReferenceData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [error, setError] = useState(null);
+  const [dataStatus, setDataStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [explorerResult, setExplorerResult] = useState(null);
   const [gatewayFxRate, setGatewayFxRate] = useState(null);
@@ -56,9 +57,9 @@ export default function CryptoPageClient() {
       setGatewayCrypto(crypto);
       setReferenceData(crypto);
       setLastUpdated(json.updatedAt || json?.sources?.crypto?.updatedAt || null);
-      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : null);
-    } catch (err) {
-      console.error('[crypto] Price Gateway error:', err.message);
+      setDataStatus(json.status || null);
+      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : json.status === 'estimated' ? 'Một phần dữ liệu đang dùng nguồn ước tính/fallback.' : null);
+    } catch {
       setError("Kết nối chậm hoặc lỗi máy chủ. Vui lòng làm mới sau.");
     } finally {
       setRefreshing(false);
@@ -271,6 +272,7 @@ export default function CryptoPageClient() {
           toOptions={converterOptions}
           referenceData={referenceData}
           lastUpdated={lastUpdated}
+          dataStatus={dataStatus}
           onConvert={handleConvert}
           usdToVndRate={usdToVnd}
           disclaimerText="Giá crypto cập nhật mỗi 60 phút. Kiểm tra lại trên CoinGecko trước khi giao dịch."

@@ -1,18 +1,34 @@
 {
   "default": {
     "spotFeePercent": 0.1,
-    "spreadPercent": 0.5
+    "spreadPercent": 0.5,
+    "fiatWithdrawalFeeVND": 0,
+    "networkFeeUsd": 1,
+    "personalIncomeTaxPercent": 0.1,
+    "vatPercent": 0
   },
   "binance": {
     "spotFeePercent": 0.1,
-    "spreadPercent": 0.5
+    "spreadPercent": 0.5,
+    "fiatWithdrawalFeeVND": 0,
+    "networkFeeUsd": 1,
+    "personalIncomeTaxPercent": 0.1,
+    "vatPercent": 0
   },
   "okx": {
     "spotFeePercent": 0.08,
-    "spreadPercent": 0.5
+    "spreadPercent": 0.5,
+    "fiatWithdrawalFeeVND": 0,
+    "networkFeeUsd": 1,
+    "personalIncomeTaxPercent": 0.1,
+    "vatPercent": 0
   },
   "bybit": {
     "spotFeePercent": 0.1,
-    "spreadPercent": 0.5
+    "spreadPercent": 0.5,
+    "fiatWithdrawalFeeVND": 0,
+    "networkFeeUsd": 1,
+    "personalIncomeTaxPercent": 0.1,
+    "vatPercent": 0
   }
 }

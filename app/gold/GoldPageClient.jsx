@@ -22,6 +22,7 @@ export default function GoldPageClient() {
   const [referenceData, setReferenceData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [error, setError] = useState(null);
+  const [dataStatus, setDataStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [explorerResult, setExplorerResult] = useState(null);
   const [vnGold, setVnGold] = useState(null);
@@ -48,7 +49,7 @@ export default function GoldPageClient() {
       const vndPerOunce = xauUsd * usdToVnd;
       const vndPerGram = usdPerGram * usdToVnd;
 
-      if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEBUG === 'true') {
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') {
         console.log('[Gold Page - Price Validator]', {
           xauUsd: Number.isFinite(xauUsd) ? `${xauUsd.toFixed(2)} USD/oz` : 'N/A',
           usdPerGram: Number.isFinite(usdPerGram) ? `${usdPerGram.toFixed(2)} USD/g` : 'N/A',
@@ -89,6 +90,7 @@ export default function GoldPageClient() {
       setGatewayGold(goldPrice);
       setReferenceData({ xauUsd: goldPrice });
       setLastUpdated(json.updatedAt || json?.sources?.gold?.updatedAt || null);
+      setDataStatus(json.status || null);
       
       // Capture metadata for diagnostics
       setGoldMeta({
@@ -97,9 +99,8 @@ export default function GoldPageClient() {
         status: json.status,
       });
       
-      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : null);
-    } catch (err) {
-      console.error('[gold] Price Gateway error:', err.message);
+      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : json.status === 'estimated' ? 'Một phần dữ liệu đang dùng nguồn ước tính/fallback.' : null);
+    } catch {
       setError("Kết nối chậm hoặc máy chủ bận. Hãy thử làm mới sau.");
     } finally {
       setRefreshing(false);
@@ -408,6 +409,7 @@ export default function GoldPageClient() {
           toOptions={unitOptions}
           referenceData={referenceData}
           lastUpdated={lastUpdated}
+          dataStatus={dataStatus}
           onConvert={handleConvert}
           disclaimerText="Giá vàng được cập nhật mỗi 120 phút. Đối chiếu lại tại cửa hàng/nhà vàng khi giao dịch."
         />

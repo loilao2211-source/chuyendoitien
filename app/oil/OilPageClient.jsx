@@ -23,6 +23,7 @@ export default function OilPageClient() {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [oilType, setOilType] = useState("brent");
   const [error, setError] = useState(null);
+  const [dataStatus, setDataStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [explorerResult, setExplorerResult] = useState(null);
   const [vnFuel, setVnFuel] = useState(null);
@@ -56,9 +57,9 @@ export default function OilPageClient() {
       const price = oilType === 'wti' ? oil?.wti : oil?.brent;
       setReferenceData(price ? { price } : null);
       setLastUpdated(json.updatedAt || json?.sources?.oil?.updatedAt || null);
-      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : null);
-    } catch (err) {
-      console.error('[oil] Price Gateway error:', err.message);
+      setDataStatus(json.status || null);
+      setError(json.status === 'stale' ? 'Dữ liệu từ cache (stale).' : json.status === 'estimated' ? 'Một phần dữ liệu đang dùng nguồn ước tính/fallback.' : null);
+    } catch {
       setError("Kết nối chậm hoặc máy chủ bận. Hãy thử làm mới sau.");
     } finally {
       setRefreshing(false);
@@ -81,7 +82,7 @@ export default function OilPageClient() {
           setVnFuel(null);
           setVnFuelError(json.error || 'Không tải được giá xăng VN');
         }
-      } catch (err) {
+      } catch {
         setVnFuel(null);
         setVnFuelError('Không tải được giá xăng VN');
       }
@@ -364,6 +365,7 @@ export default function OilPageClient() {
           toOptions={unitOptions}
           referenceData={referenceData}
           lastUpdated={lastUpdated}
+          dataStatus={dataStatus}
           onConvert={handleConvert}
           disclaimerText="Giá dầu cập nhật mỗi 120 phút. Đối chiếu với nhà cung cấp khi giao dịch."
         />

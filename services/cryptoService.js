@@ -24,7 +24,7 @@ export async function fetchCryptoPrices(ids = DEFAULT_CRYPTO_IDS) {
   
   try {
     const idsStr = ids.join(',');
-    const url = `${COINGECKO_BASE}/simple/price?ids=${idsStr}&vs_currencies=usd`;
+    const url = `${COINGECKO_BASE}/simple/price?ids=${idsStr}&vs_currencies=usd&include_last_updated_at=true`;
     const res = await fetch(url);
     
     if (!res.ok) throw new Error('CoinGecko API error');
@@ -40,7 +40,6 @@ export async function fetchCryptoPrices(ids = DEFAULT_CRYPTO_IDS) {
     setCache(cacheKey, prices, 2 * 60 * 60 * 1000); // 2 hours
     return prices;
   } catch (error) {
-    console.error('[cryptoService] fetchCryptoPrices error:', error);
     throw error;
   }
 }
@@ -76,7 +75,6 @@ export async function fetchHistoricalCrypto(id = 'bitcoin', days = 30) {
     setCache(cacheKey, chartData, 3 * 60 * 60 * 1000); // 3 hours cache for historical
     return chartData;
   } catch (error) {
-    console.error('[cryptoService] fetchHistoricalCrypto error:', error);
     throw error;
   }
 }
@@ -112,7 +110,6 @@ export async function fetchCryptoMetadata(id) {
     setCache(cacheKey, metadata, 24 * 60 * 60 * 1000); // 24 hours
     return metadata;
   } catch (error) {
-    console.error('[cryptoService] fetchCryptoMetadata error:', error);
     throw error;
   }
 }

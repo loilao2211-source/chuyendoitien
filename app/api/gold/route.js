@@ -1,7 +1,7 @@
 // API route for gold prices
 // GET /api/gold?quote=USD
 import { cache } from '@/lib/cache';
-import { metals } from '@/lib/providers/metals';
+import { fetchGoldQuote } from '@/services/goldService';
 import { normalize } from '@/lib/normalize';
 import { TTL } from '@/lib/constants';
 
@@ -20,17 +20,18 @@ export async function GET(request) {
         return Response.json(
           normalize.success(cached, { 
             source: cached.source || 'Metals API', 
+            sourceType: cached.sourceType,
+            isEstimated: cached.isEstimated,
             cached: true, 
             ttl: TTL,
-            updatedAt: cached.updatedAt,
-            ageMinutes: Math.round(ageMs / 60000),
+            lastUpdated: cached.updatedAt,
           })
         );
       }
     }
 
     // Cache miss or stale - fetch from provider
-    const result = await metals.getGoldPrice(quote);
+    const result = await fetchGoldQuote(quote);
 
     // Store in cache
     await cache.set(cacheKey, result, TTL);
@@ -38,10 +39,11 @@ export async function GET(request) {
     return Response.json(
       normalize.success(result, { 
         source: result.source || 'Metals API', 
+        sourceType: result.sourceType,
+        isEstimated: result.isEstimated,
         cached: false, 
         ttl: TTL,
-        updatedAt: result.updatedAt,
-        ageMinutes: 0,
+        lastUpdated: result.updatedAt,
       })
     );
   } catch (error) {

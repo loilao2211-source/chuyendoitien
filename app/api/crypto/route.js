@@ -23,7 +23,14 @@ export async function GET(request) {
     const cached = await cache.get(cacheKey);
     if (cached) {
       return Response.json(
-        normalize.success(cached, { source: 'CoinGecko', cached: true, ttl: TTL })
+        normalize.success(cached, {
+          source: 'CoinGecko',
+          sourceType: cached.sourceType,
+          isEstimated: cached.isEstimated,
+          cached: true,
+          ttl: TTL,
+          lastUpdated: cached.updatedAt,
+        })
       );
     }
 
@@ -34,7 +41,14 @@ export async function GET(request) {
     await cache.set(cacheKey, result, TTL);
 
     return Response.json(
-      normalize.success(result, { source: 'CoinGecko', cached: false, ttl: TTL })
+      normalize.success(result, {
+        source: 'CoinGecko',
+        sourceType: result.sourceType,
+        isEstimated: result.isEstimated,
+        cached: false,
+        ttl: TTL,
+        lastUpdated: result.updatedAt,
+      })
     );
   } catch (error) {
     console.error('[API/Crypto] Error:', error);

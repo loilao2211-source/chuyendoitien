@@ -13,6 +13,16 @@ const FALLBACK_GOLD_PRICE = 4865.26; // Current market price Jan 21, 2026 (Inves
 const REASONABLE_XAU_MIN = 500;
 const REASONABLE_XAU_MAX = 20000;
 
+const fallbackGoldQuote = (source = 'fallback-error') => ({
+  xauUsd: FALLBACK_GOLD_PRICE,
+  unit: 'USD_per_troy_oz',
+  source,
+  sourceType: 'fallback',
+  isEstimated: true,
+  updatedAt: new Date().toISOString(),
+  note: 'Fallback XAU/USD price. Verify against a live market source before trading.',
+});
+
 /**
  * Normalize and validate XAU price
  */
@@ -28,8 +38,8 @@ function normalizeXauPrice(rawValue, source = 'unknown') {
 
   const isValid = xauUsd >= REASONABLE_XAU_MIN && xauUsd <= REASONABLE_XAU_MAX;
 
-  // Dev validator
-  if (process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_DEBUG === 'true') {
+  // Optional validator
+  if (process.env.NEXT_PUBLIC_DEBUG === 'true') {
     console.log('[Gold Service - XAU Normalization]', {
       source,
       rawValue,
@@ -52,18 +62,24 @@ function normalizeXauPrice(rawValue, source = 'unknown') {
  * @returns {Promise<number>} Gold price per troy ounce in USD
  */
 export async function fetchGoldPrice() {
+  const quote = await fetchGoldQuote();
+  return quote.xauUsd;
+}
+
+/**
+ * Fetch current gold quote with source metadata.
+ * @returns {Promise<object>} Gold quote object
+ */
+export async function fetchGoldQuote() {
   const cacheKey = 'gold-price-current';
   const cached = getCache(cacheKey);
   
   // Return cache if fresh (< 5 minutes for better real-time accuracy)
   if (cached) {
-    if (typeof cached === 'number') {
-      return cached;
-    }
     if (cached.xauUsd && cached.updatedAt) {
       const ageMs = Date.now() - new Date(cached.updatedAt).getTime();
       if (ageMs < 5 * 60 * 1000) { // 5 minutes
-        return cached.xauUsd; // Return number, not object
+        return cached;
       }
     }
   }
@@ -76,12 +92,16 @@ export async function fetchGoldPrice() {
     if (pricePerOz && pricePerOz >= REASONABLE_XAU_MIN && pricePerOz <= REASONABLE_XAU_MAX) {
       const payload = {
         xauUsd: pricePerOz,
+        unit: 'USD_per_troy_oz',
         source: result.source || 'unknown',
+        sourceType: result.sourceType || (result.isEstimated ? 'fallback' : 'live'),
+        isEstimated: Boolean(result.isEstimated),
         updatedAt: result.updatedAt || new Date().toISOString(),
         inverted: result.inverted || false,
+        ...(result.note ? { note: result.note } : {}),
       };
       setCache(cacheKey, payload, 10 * 60 * 1000); // Cache for 10 minutes
-      return payload.xauUsd;
+      return payload;
     }
 
     // Fallback to direct API if provider returned unexpected shape
@@ -100,22 +120,27 @@ export async function fetchGoldPrice() {
           if (normalized.isValid) {
             const payload = {
               xauUsd: normalized.xauUsd,
+              unit: 'USD_per_troy_oz',
               source: 'metals-api-direct',
+              sourceType: 'live',
+              isEstimated: false,
               updatedAt: new Date().toISOString(),
               inverted: normalized.inverted,
             };
             setCache(cacheKey, payload, 10 * 60 * 1000);
-            return payload.xauUsd;
+            return payload;
           }
         }
       }
     }
 
-    console.warn('[goldService] Invalid gold data, using fallback');
-    return FALLBACK_GOLD_PRICE;
-  } catch (error) {
-    console.warn('[goldService] Fetch failed:', error.message, '- using fallback');
-    return FALLBACK_GOLD_PRICE;
+    const fallback = fallbackGoldQuote('fallback-current');
+    setCache(cacheKey, fallback, 10 * 60 * 1000);
+    return fallback;
+  } catch {
+    const fallback = fallbackGoldQuote('fallback-error');
+    setCache(cacheKey, fallback, 10 * 60 * 1000);
+    return fallback;
   }
 }
 
@@ -160,8 +185,7 @@ export async function fetchHistoricalGold(days = 30) {
     
     setCache(cacheKey, data, 30 * 60 * 1000); // 30 minutes cache for historical
     return data;
-  } catch (error) {
-    console.error('[goldService] fetchHistoricalGold error:', error);
+  } catch {
     // Return fallback data with current market price
     const data = [];
     for (let i = days; i >= 0; i--) {

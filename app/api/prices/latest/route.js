@@ -3,8 +3,8 @@ import { getCache, setCache } from '@/services/cache';
 import { fetchRates } from '@/services/fxService';
 import { fetchCryptoPrices } from '@/services/cryptoService';
 import cryptoCoins from '@/data/cryptoCoins.json';
-import { fetchGoldPrice } from '@/services/goldService';
-import { fetchBrentPrice, fetchWTIPrice } from '@/services/oilService';
+import { fetchGoldQuote } from '@/services/goldService';
+import { fetchOilQuote } from '@/services/oilService';
 
 // TTLs per data group (milliseconds)
 const TTL = {
@@ -26,11 +26,21 @@ async function fetchWithCache(key, ttl, fetcher) {
     const data = await fetcher();
     const payload = { data, updatedAt: now };
     setCache(key, payload, ttl);
-    return { ...payload, stale: false };
+    return {
+      ...payload,
+      stale: false,
+      sourceType: data?.sourceType || 'live',
+      isEstimated: Boolean(data?.isEstimated),
+    };
   } catch (error) {
     console.warn(`[price-gateway] ${key} fetch failed:`, error.message || error);
     if (cached) {
-      return { ...cached, stale: true };
+      return {
+        ...cached,
+        stale: true,
+        sourceType: cached.data?.sourceType || 'cache',
+        isEstimated: Boolean(cached.data?.isEstimated),
+      };
     }
     throw error;
   }
@@ -55,14 +65,23 @@ export async function GET() {
         TTL.crypto,
         () => fetchCryptoPrices(cryptoCoins.map((c) => c.id))
       ),
-      fetchWithCache('gateway-gold', TTL.gold, () => fetchGoldPrice()),
+      fetchWithCache('gateway-gold', TTL.gold, () => fetchGoldQuote()),
       fetchWithCache('gateway-oil', TTL.oil, async () => {
-        const [brent, wti] = await Promise.all([fetchBrentPrice(), fetchWTIPrice()]);
-        return { brent, wti };
+        const [brent, wti] = await Promise.all([fetchOilQuote('brent'), fetchOilQuote('wti')]);
+        return {
+          brent: brent.price,
+          wti: wti.price,
+          quotes: { brent, wti },
+          source: brent.source === wti.source ? brent.source : `${brent.source},${wti.source}`,
+          sourceType: brent.sourceType === 'fallback' || wti.sourceType === 'fallback' ? 'fallback' : 'live',
+          isEstimated: Boolean(brent.isEstimated || wti.isEstimated),
+          updatedAt: new Date(Math.max(Date.parse(brent.updatedAt), Date.parse(wti.updatedAt))).toISOString(),
+        };
       }),
     ]);
 
     const stale = fx.stale || crypto.stale || gold.stale || oil.stale;
+    const estimated = fx.isEstimated || crypto.isEstimated || gold.isEstimated || oil.isEstimated;
     const updatedAt = new Date(
       Math.max(
         Date.parse(fx.updatedAt || 0),
@@ -74,12 +93,18 @@ export async function GET() {
 
     const body = {
       updatedAt,
-      status: stale ? 'stale' : 'fresh',
+      status: stale ? 'stale' : estimated ? 'estimated' : 'fresh',
       sources: {
-        fx: fx.stale ? 'stale' : 'fresh',
-        crypto: crypto.stale ? 'stale' : 'fresh',
-        gold: gold.stale ? 'stale' : 'fresh',
-        oil: oil.stale ? 'stale' : 'fresh',
+        fx: fx.stale ? 'stale' : fx.sourceType || 'fresh',
+        crypto: crypto.stale ? 'stale' : crypto.sourceType || 'fresh',
+        gold: gold.stale ? 'stale' : gold.sourceType || 'fresh',
+        oil: oil.stale ? 'stale' : oil.sourceType || 'fresh',
+      },
+      sourceDetails: {
+        fx: 'open.er-api.com',
+        crypto: 'coingecko',
+        gold: gold.data?.source || 'unknown',
+        oil: oil.data?.source || 'unknown',
       },
       data: {
         fx: fx.data,

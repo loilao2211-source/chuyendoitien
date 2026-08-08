@@ -28,6 +28,7 @@ export default function CurrencyPage() {
   const [referenceData, setReferenceData] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [error, setError] = useState(null);
+  const [dataStatus, setDataStatus] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [explorerResult, setExplorerResult] = useState(null);
   const [selectedCurrencyPair, setSelectedCurrencyPair] = useState('USD-VND');
@@ -57,9 +58,9 @@ export default function CurrencyPage() {
       setReferenceData(rates);
       setGatewayFxRate(rates?.VND || null);
       setLastUpdated(json.updatedAt || json?.sources?.fx?.updatedAt || null);
-      setError(json.status === 'stale' ? 'Dữ liệu FX từ cache (stale).' : null);
-    } catch (err) {
-      console.error('[currency] Price Gateway error:', err.message);
+      setDataStatus(json.status || null);
+      setError(json.status === 'stale' ? 'Dữ liệu FX từ cache (stale).' : json.status === 'estimated' ? 'Một phần dữ liệu đang dùng nguồn ước tính/fallback.' : null);
+    } catch {
       setError('Mạng chậm hoặc lỗi máy chủ. Hãy thử làm mới sau ít phút.');
     } finally {
       setRefreshing(false);
@@ -79,8 +80,7 @@ export default function CurrencyPage() {
       const [from, to] = selectedCurrencyPair.split('-');
       const data = await fetchHistoricalRates(from, to, chartRange);
       setChartData(data);
-    } catch (err) {
-      console.error('[Currency Chart] Error:', err);
+    } catch {
       setChartError('Lỗi kết nối khi tải biểu đồ');
     } finally {
       setChartLoading(false);
@@ -220,6 +220,7 @@ export default function CurrencyPage() {
           toOptions={currencyOptions}
           referenceData={referenceData}
           lastUpdated={lastUpdated}
+          dataStatus={dataStatus}
           onConvert={handleConvert}
           disclaimerText="Tỷ giá được cập nhật mỗi 30 phút. Đối chiếu lại tại ngân hàng trước khi giao dịch."
         />
