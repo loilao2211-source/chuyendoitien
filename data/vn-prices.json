@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-20T07:00:36.000Z",
+  "updatedAt": "2026-08-20T13:05:04.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -53,20 +53,20 @@
       {
         "code": "E5 RON92",
         "name": "Xăng E5 RON 92",
-        "region1": 21230,
-        "region2": 21650
+        "region1": 21830,
+        "region2": 22260
       },
       {
         "code": "DO 0.05S",
         "name": "Dầu diesel 0.05S-II",
-        "region1": 27230,
-        "region2": 27770
+        "region1": 28540,
+        "region2": 29110
       },
       {
         "code": "Kerosene",
         "name": "Dầu hỏa",
-        "region1": 26170,
-        "region2": 26690
+        "region1": 27290,
+        "region2": 27830
       },
       {
         "code": "Mazut",
@@ -195,7 +195,7 @@
           "label": "Xăng E5 RON92 (VND/L)",
           "unit": "L",
           "fromBarrel": 158.987,
-          "priceVnd": 21230
+          "priceVnd": 21830
         },
         "vn_ron95": {
           "label": "Xăng RON95-III (VND/L)",
@@ -207,7 +207,7 @@
           "label": "Dầu DO 0.05S (VND/L)",
           "unit": "L",
           "fromBarrel": 158.987,
-          "priceVnd": 27230
+          "priceVnd": 28540
         }
       }
     }
