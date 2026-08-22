@@ -1,17 +1,10 @@
 {
-  "updatedAt": "2026-08-22T12:55:02.000Z",
+  "updatedAt": "2026-08-22T18:00:33.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
     "unit": "VND/lượng (1 lượng = 10 chỉ = 37.5g)",
     "items": [
-      {
-        "brand": "SJC",
-        "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 144600000,
-        "sell": 147600000,
-        "logo": "/logos/gold/SJC.png"
-      },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
@@ -20,18 +13,18 @@
         "logo": "/logos/gold/PNJ.webp"
       },
       {
-        "brand": "Bảo Tín Minh Châu",
-        "type": "Vàng 9999",
-        "buy": 145500000,
-        "sell": 149500000,
-        "logo": "/logos/gold/BTMC.png"
-      },
-      {
         "brand": "Doji",
         "type": "Vàng SJC",
         "buy": 144600000,
         "sell": 147600000,
         "logo": "/logos/gold/DOJI.jpg"
+      },
+      {
+        "brand": "Phú Quý",
+        "type": "Vàng 999.9",
+        "buy": 144600000,
+        "sell": 147600000,
+        "logo": "/logos/gold/PhuQuy.png"
       }
     ],
     "note": "Giá vàng từ WebGia và các nguồn doanh nghiệp được WebGia tổng hợp; tự động cập nhật bằng npm run update:vn-prices."
