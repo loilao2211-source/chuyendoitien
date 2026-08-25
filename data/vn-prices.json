@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-24T18:00:38.000Z",
+  "updatedAt": "2026-08-25T01:45:03.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -8,15 +8,15 @@
       {
         "brand": "SJC",
         "type": "Vàng SJC 1L, 5c, 10c",
-        "buy": 147000000,
-        "sell": 150000000,
+        "buy": 147600000,
+        "sell": 150600000,
         "logo": "/logos/gold/SJC.png"
       },
       {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
-        "buy": 146800000,
-        "sell": 150000000,
+        "buy": 147500000,
+        "sell": 150500000,
         "logo": "/logos/gold/PNJ.webp"
       },
       {
@@ -36,8 +36,8 @@
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 147000000,
-        "sell": 150000000,
+        "buy": 148000000,
+        "sell": 150600000,
         "logo": "/logos/gold/PhuQuy.png"
       }
     ],
@@ -130,13 +130,13 @@
         "vn_sjc": {
           "label": "SJC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 150000000,
+          "priceVnd": 150600000,
           "icon": "🥇"
         },
         "vn_pnj": {
           "label": "PNJ (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 150000000,
+          "priceVnd": 150500000,
           "icon": "💎"
         },
         "vn_btmc": {
@@ -154,7 +154,7 @@
         "vn_baotin": {
           "label": "Phú Quý (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 150000000,
+          "priceVnd": 150600000,
           "icon": "✨"
         }
       }
