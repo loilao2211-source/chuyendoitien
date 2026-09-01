@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-01T05:00:54.000Z",
+  "updatedAt": "2026-09-01T11:31:10.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -22,8 +22,8 @@
       {
         "brand": "Bảo Tín Minh Châu",
         "type": "Vàng 9999",
-        "buy": 145600000,
-        "sell": 149600000,
+        "buy": 145200000,
+        "sell": 149200000,
         "logo": "/logos/gold/BTMC.png"
       },
       {
@@ -36,7 +36,7 @@
       {
         "brand": "Phú Quý",
         "type": "Vàng 999.9",
-        "buy": 145400000,
+        "buy": 145000000,
         "sell": 148700000,
         "logo": "/logos/gold/PhuQuy.png"
       }
@@ -142,7 +142,7 @@
         "vn_btmc": {
           "label": "BTMC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 149600000,
+          "priceVnd": 149200000,
           "icon": "⭐"
         },
         "vn_doji": {
