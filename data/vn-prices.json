@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16T11:15:08.000Z",
+  "updatedAt": "2026-10-16T15:55:03.000Z",
   "source": "Tự động cập nhật từ WebGia/SJC-compatible public pages",
   "description": "Fallback snapshot cho giá vàng và xăng dầu Việt Nam. Runtime APIs thử nguồn live trước, rồi mới dùng file này.",
   "gold": {
@@ -18,13 +18,6 @@
         "buy": 140300000,
         "sell": 143300000,
         "logo": "/logos/gold/PNJ.webp"
-      },
-      {
-        "brand": "Bảo Tín Minh Châu",
-        "type": "Vàng 9999",
-        "buy": 139100000,
-        "sell": 143100000,
-        "logo": "/logos/gold/BTMC.png"
       },
       {
         "brand": "Doji",
