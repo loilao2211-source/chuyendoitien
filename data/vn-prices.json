@@ -20,6 +20,13 @@
         "logo": "/logos/gold/PNJ.webp"
       },
       {
+        "brand": "Bảo Tín Minh Châu",
+        "type": "Vàng 9999",
+        "buy": 138800000,
+        "sell": 142800000,
+        "logo": "/logos/gold/BTMC.png"
+      },
+      {
         "brand": "Doji",
         "type": "Vàng SJC",
         "buy": 140900000,
@@ -135,7 +142,7 @@
         "vn_btmc": {
           "label": "BTMC (VND/lượng)",
           "unit": "VND/lượng",
-          "priceVnd": 143100000,
+          "priceVnd": 142800000,
           "icon": "⭐"
         },
         "vn_doji": {
