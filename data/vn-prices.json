@@ -6,6 +6,13 @@
     "unit": "VND/lượng (1 lượng = 10 chỉ = 37.5g)",
     "items": [
       {
+        "brand": "SJC",
+        "type": "Vàng SJC 1L, 5c, 10c",
+        "buy": 138700000,
+        "sell": 141700000,
+        "logo": "/logos/gold/SJC.png"
+      },
+      {
         "brand": "PNJ",
         "type": "Vàng 9999 (24K)",
         "buy": 138000000,
